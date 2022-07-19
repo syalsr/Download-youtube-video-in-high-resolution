@@ -26,6 +26,12 @@ def download_video(link):
     os.remove(audio_name)
     os.remove(video_name)
 
+def download_audio(link):
+    yt = YouTube(link)
+    audio = yt.streams.get_audio_only()
+    audio_name = 'audio' + audio.title + '.mp3'
+    audio.download(path, audio_name)
+
 def parse_links():
     list_links = list()
     while True:
@@ -39,10 +45,17 @@ def run_download_video(links):
     for link in links:
         download_video(link)
 
-if __name__ == '__main__':
-    links = parse_links()
-    run_download_video(links)
+def run_download_audio(links):
+    for link in links:
+        download_audio(link)
 
+if __name__ == '__main__':
+    anwser = input('Would you download video or audio: ')
+    links = parse_links()
+    if anwser == 'video':
+        run_download_video(links)
+    elif anwser == 'audio':
+        run_download_audio(links)
 
     #os.system(f'ffmpeg -i new.mp4 -ac 2 -f wav new.wav')
 
