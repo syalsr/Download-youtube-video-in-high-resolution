@@ -14,7 +14,7 @@ def combine(video, audio, name):
 def download_video(link):
     yt = YouTube(link)
     video = yt.streams.filter(file_extension='mp4').order_by('resolution').last()
-    video_name = 'video' + video.title + '.mp4'
+    video_name = 'video ' + video.title + '.mp4'
     result_name = video.title
     print('RESULT NAME: ', result_name)
     video.download(path, video_name)
@@ -29,14 +29,14 @@ def download_video(link):
 def download_audio(link):
     yt = YouTube(link)
     audio = yt.streams.get_audio_only()
-    audio_name = 'audio' + audio.title + '.mp3'
+    audio_name = 'audio ' + audio.title + '.mp3'
     audio.download(path, audio_name)
 
 def parse_links():
     list_links = list()
     while True:
         inp = input("Enter link or exit to start downloading: ")
-        if inp == "exit":
+        if inp.lower() == "exit":
             break
         list_links.append(inp)
     return list_links
@@ -52,9 +52,9 @@ def run_download_audio(links):
 if __name__ == '__main__':
     anwser = input('Would you download video or audio: ')
     links = parse_links()
-    if anwser == 'video':
+    if anwser.lower() == 'video':
         run_download_video(links)
-    elif anwser == 'audio':
+    elif anwser.lower() == 'audio':
         run_download_audio(links)
 
     #os.system(f'ffmpeg -i new.mp4 -ac 2 -f wav new.wav')
